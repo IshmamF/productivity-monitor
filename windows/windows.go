@@ -1,4 +1,4 @@
-package window
+package windows
 
 import (
     "syscall"
