@@ -1,8 +1,6 @@
 package darwin
 
 import (
-	"fmt"
-	"time"
 	"os/exec"
 	"strings"
 )
@@ -19,6 +17,7 @@ func GetForegroundWindowData() string {
 	output, err := cmd.CombinedOutput()
 	if err != nil {
 		return "No window detected"
+	}
 	prettyOutput := strings.Replace(string(output), "\n", "", -1)
 	return prettyOutput
 }
