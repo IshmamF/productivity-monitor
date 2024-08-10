@@ -6,20 +6,7 @@ import (
 )
 
 func GetForegroundWindowData() string {
-	/*
-	script := `
-	global frontApp, appTitle, windowTitle
-	set windowTitle to "" 
-	tell application "System Events"
-		set frontApp to name of first application process whose frontmost is true
-		set appTitle to title of first application process whose frontmost is true
-		tell process frontApp
-			set windowTitle to value of attribute "AXTitle" of window 1
-		end tell
-	end tell
-	return {appTitle, windowTitle}`*/
-
-	test_script := `
+	apple_script := `
 	tell application "System Events" to set frontApp to name of first application process whose frontmost is true
 	tell application "System Events" to set appTitle to title of first application process whose frontmost is true
 
@@ -53,7 +40,7 @@ func GetForegroundWindowData() string {
 	
 	return {currentTabUrl, currentTabTitle, appTitle, windowTitle}
 	`
-	cmd := exec.Command("osascript", "-e", test_script)
+	cmd := exec.Command("osascript", "-e", apple_script)
 	output, err := cmd.CombinedOutput()
 	if err != nil {
 		return "No window detected"
