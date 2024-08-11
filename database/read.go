@@ -2,7 +2,6 @@ package database
 
 import (
 	"log"
-	"strconv"
 	"database/sql"
 )
 
@@ -16,7 +15,7 @@ func (d *DB) CountAppUsageWithRange (startTime int64, endTime int64) []App_Count
 // Executes the query to get the count of number of app/site within time period
 func (d *DB) QueryAppUsageCount (startTime int64, endTime int64) *sql.Rows {
 	db := d.conn
-	rows, err := db.Query(`SELECT App_Name, count(App_Name) FROM Activity WHERE Log_Time BETWEEN ` + strconv.FormatInt(startTime, 10) + ` AND ` + strconv.FormatInt(endTime, 10) + ` group by App_Name`)
+	rows, err := db.Query(`SELECT App_Name, count(App_Name) FROM Activity WHERE Log_Time BETWEEN ? AND ? group by App_Name`, startTime, endTime)
 	if err != nil {
 		panic("Query Failed")
 	}
@@ -41,7 +40,7 @@ func ScanAppCountQuery (rows *sql.Rows) []App_Count {
 // Executes a query to get back all rows within Activity Table
 func (d *DB) ReadAllRows() []Activity {
 	db := d.conn
-	rows, err := db.Query(`SELECT App_Name, Start_Time, Log_Time FROM Activity`)
+	rows, err := db.Query(`SELECT Title, App_Or_Site, Url, App_Name, Start_Time, Log_Time FROM Activity`)
 	if err != nil {
 		panic("Query Failed")
 	}
@@ -54,7 +53,7 @@ func ScanAllRows (rows *sql.Rows) []Activity {
 	results := []Activity{}
 	for rows.Next() {
 		activity := Activity{}
-		err := rows.Scan(&activity.App_Name, &activity.Start_Time, &activity.Log_Time)
+		err := rows.Scan(&activity.Title, &activity.App_Or_Site, &activity.Url, &activity.App_Name, &activity.Start_Time, &activity.Log_Time)
 		if err != nil {
 			log.Panic("SCAN FAILED: ", err)
 		}

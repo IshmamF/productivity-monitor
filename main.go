@@ -28,21 +28,22 @@ func main() {
 	fmt.Println("LOOP START")
   	for i := 0; i < 5; i++ {
 		var currWindow string
-		logTime := utils.GetCurrentTimestamp()
 		var activity database.Activity
+		activity.Start_Time = startTime
+		activity.Log_Time = utils.GetCurrentTimestamp()
 		if os == "darwin" {
 			currWindow = darwin.GetForegroundWindowData()
 			activity.Url, activity.App_Name, activity.Title, activity.App_Or_Site = utils.ProcessActivityDetails(currWindow)
-			fmt.Println("Start: " + utils.IntToString(startTime) + ` Log: ` + utils.IntToString(logTime) + ` Window: `, activity.Url, activity.App_Name, activity.Title, activity.App_Or_Site)
+			fmt.Println("Start: " + utils.IntToString(startTime) + ` Log: ` + utils.IntToString(activity.Log_Time) + ` Window: `, activity.Url, activity.App_Name, activity.Title, activity.App_Or_Site)
 		} else {
 			// currWindow = window.GetForegroundWindowData() Uncomment when building for use
 		}
-		db.AddActivity(startTime, logTime, currWindow)
+		db.AddActivity(activity)
 		time.Sleep(2 * time.Second)
 	}
 
-	results := db.CountAppUsageWithRange(1723256375, 1723341501)
-	//results := db.ReadAllRows()
+	//results := db.CountAppUsageWithRange(1723256375, 1723400234)
+	results := db.ReadAllRows()
 	fmt.Println(results)
 
 }

@@ -1,7 +1,6 @@
 package utils
 
 import (
-	"fmt"
 	"strings"
 )
 
@@ -31,10 +30,9 @@ func ProcessActivityDetails(activity string) (string, string, string, string) {
 		App_Or_Site = data[2]
 	} else {
 		Title = data[1]
-		fmt.Println(ConvertUrlToDomain(Url))
 		App_Or_Site = ConvertUrlToDomain(Url)
 	}
-	
+
 	return Url, App_Name, Title, App_Or_Site
 
 }

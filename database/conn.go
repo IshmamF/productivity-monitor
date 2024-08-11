@@ -25,7 +25,7 @@ func (d *DB) Connection () {
 
 func (d *DB) CreateTables () {
 	db := d.conn
-	_, err := db.Exec(`CREATE TABLE IF NOT EXISTS Activity (Start_Time INTEGER, Log_Time INTEGER, App_Name VARCHAR)`)
+	_, err := db.Exec(`CREATE TABLE IF NOT EXISTS Activity (Start_Time INTEGER, Log_Time INTEGER, App_Or_Site string, App_Name VARCHAR, Url string, Title string)`)
 	if err != nil {
 		log.Panic("ADDING TABLE FAILURE: ", err)
 	}
