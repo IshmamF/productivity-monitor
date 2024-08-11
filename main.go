@@ -8,10 +8,19 @@ import (
 	"github.com/IshmamF/productivity-monitor/darwin"
 	"github.com/IshmamF/productivity-monitor/utils"
 	"github.com/IshmamF/productivity-monitor/database"
-	_ "github.com/marcboeker/go-duckdb"
 	"strconv"
-
 )
+
+// TO DO NEXT: 
+// - Create function for currentTimestamp in Utils
+// - Look up how to check if table and file exists or not (to handle new and previous users) 
+// - Create function to process string recieved from GetForegroundWindowData()
+// - Get user input on when to send alert, might need to use a counter to keep track of time passed  
+// - Need to look into how to execute other functions like viewing statistics or running the alert
+// while the logging occurs 
+// - Create GUI 
+// - Option to see current session data 
+// - Convert data to daily/weekly/monthly/all time statistics 
 
 func main() {
 	os := utils.Get_OS()
@@ -33,6 +42,7 @@ func main() {
 	}
 
 	results := db.CountAppUsageWithRange(1723256375, 1723341501)
+	//results := db.ReadAllRows()
 	fmt.Println(results)
 
 
