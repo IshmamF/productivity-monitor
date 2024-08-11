@@ -17,6 +17,7 @@ var (
 	App_Name string // app_title
 	Title string // website_title or windowTitle
 */
+
 func ProcessActivityDetails(activity string) (string, string, string, string) {
 	if activity == "No window detected" {
 		return Url, activity, Title, activity

@@ -6,6 +6,7 @@ require golang.org/x/sys v0.23.0
 
 require (
 	filippo.io/edwards25519 v1.1.0 // indirect
+	github.com/andybrewer/mack v0.0.0-20220307193339-22e922cc18af // indirect
 	github.com/apache/arrow/go/v14 v14.0.2 // indirect
 	github.com/go-sql-driver/mysql v1.8.1 // indirect
 	github.com/goccy/go-json v0.10.2 // indirect

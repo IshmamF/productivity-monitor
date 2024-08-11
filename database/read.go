@@ -15,7 +15,7 @@ func (d *DB) CountAppUsageWithRange (startTime int64, endTime int64) []App_Count
 // Executes the query to get the count of number of app/site within time period
 func (d *DB) QueryAppUsageCount (startTime int64, endTime int64) *sql.Rows {
 	db := d.conn
-	rows, err := db.Query(`SELECT App_Name, count(App_Name) FROM Activity WHERE Log_Time BETWEEN ? AND ? group by App_Name`, startTime, endTime)
+	rows, err := db.Query(`SELECT App_Name, COUNT(App_Name) FROM Activity WHERE Log_Time BETWEEN ? AND ? group by App_Name`, startTime, endTime)
 	if err != nil {
 		panic("Query Failed")
 	}
@@ -35,6 +35,21 @@ func ScanAppCountQuery (rows *sql.Rows) []App_Count {
 		results = append(results, app_count)
 	}
 	return results
+}
+
+func (d *DB) HighestUsedApp(startTime int64, endTime int64) App_Count {
+	db := d.conn
+	query := `
+	SELECT App_Or_Site, COUNT(App_Or_Site)
+	FROM Activity 
+	WHERE Log_Time BETWEEN ? AND ? 
+	GROUP BY App_Or_Site
+	ORDER BY COUNT(App_Or_Site) DESC LIMIT 1;
+	`
+	var appCount App_Count
+	row := db.QueryRow(query, startTime, endTime)
+	_ = row.Scan(&appCount.App_Name, &appCount.Count)
+	return appCount
 }
 
 // Executes a query to get back all rows within Activity Table
