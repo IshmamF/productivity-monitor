@@ -7,41 +7,41 @@ import (
 	"github.com/IshmamF/productivity-monitor/darwin"
 	"github.com/IshmamF/productivity-monitor/utils"
 	"github.com/IshmamF/productivity-monitor/database"
-	"github.com/andybrewer/mack"
 )
 
 // TO DO NEXT: 
 // [x] Create function for currentTimestamp in Utils
 // [x] Look up how to check if table and file exists or not (to handle new and previous users) 
 // [x] Create function to process string recieved from GetForegroundWindowData()
-// - Get user input on when to send alert, might need to use a counter to keep track of time passed  
+// [x] Get user input on when to send alert, might need to use a counter to keep track of time passed  
 // - Need to look into how to execute other functions like viewing statistics or running the alert
 // while the logging occurs 
 // - Create GUI 
 // - Option to see current session data 
 // - Convert data to daily/weekly/monthly/all time statistics 
 
-func main() {
-	os := utils.Get_OS()
-	db := &database.DB{}
-	db.Connection()
-	startTime := utils.GetCurrentTimestamp()
-	var alert_interval int
+var (
+	activity database.Activity
+	currWindow string
+	counter = 0
+	alert_interval int
+	db = &database.DB{}
+	os = utils.Get_OS()
+)
 
-	fmt.Println("Set Alert Interval (in seconds): ") 
-	fmt.Scanln(&alert_interval) 
+func main() {
+	db.Connection()
+
+	alert_interval = utils.GetUserInterval()
+	startTime := utils.GetCurrentTimestamp()
 	
-	counter := 0
   	for {
-		var activity database.Activity
-		var currWindow string
 		activity.Start_Time = startTime
 		activity.Log_Time = utils.GetCurrentTimestamp()
 
 		if counter > 0 && counter % alert_interval == 0 {
 			result := db.HighestUsedApp(activity.Log_Time - int64(alert_interval), activity.Log_Time)
-			fmt.Println(result)
-			mack.Alert("Productivity Monitor", result.App_Name + " for " + utils.IntToString(int64(result.Count)) + " seconds","critical")
+			utils.AlertMostUsedApp(result)
 		}
 
 		if os == "darwin" {
