@@ -5,7 +5,10 @@ package database
 type Activity struct {
 	Start_Time int64 // timestamp of when session started 
 	Log_Time int64 // timestamp of when activity was recorded
-	App_Name string // website_url, website_title, app_title, windowTitle
+	App_Or_Site string // app_title or website domain
+	Url string // website_url
+	App_Name string // app_title
+	Title string // website_title or windowTitle
 }
 
 // How often app was used 
