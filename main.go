@@ -16,9 +16,20 @@ import (
 // [x] Get user input on when to send alert, might need to use a counter to keep track of time passed  
 // - Need to look into how to execute other functions like viewing statistics or running the alert
 // while the logging occurs 
-// - Create GUI 
+// - Create TUI 
 // - Option to see current session data 
 // - Convert data to daily/weekly/monthly/all time statistics 
+
+// NOTES
+/*
+login program, starts running automatically when you login to computer
+Prevent double instances being open
+Lock file , same location (.local/share on mac)
+os.OpenFile to open file
+os.Stat to check file exists
+look into channels
+go routine , if forever loop , main routine waits for program to exit
+*/
 
 var (
 	activity database.Activity
