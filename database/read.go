@@ -39,6 +39,8 @@ func ScanAppCountQuery (rows *sql.Rows) []App_Count {
 
 func (d *DB) HighestUsedApp(startTime int64, endTime int64) App_Count {
 	db := d.conn
+	startTime -= 1
+	endTime += 1
 	query := `
 	SELECT App_Or_Site, COUNT(App_Or_Site)
 	FROM Activity 

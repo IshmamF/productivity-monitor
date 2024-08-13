@@ -2,12 +2,19 @@ package database
 
 import (
 	"database/sql"
-	_ "github.com/marcboeker/go-duckdb"
+	//"fmt"
 	"log"
+
+	_ "github.com/marcboeker/go-duckdb"
+
+	//	"io"
+	//	"errors"
+	"os"
+	"strings"
 )
 
 var (
-	filepath = "storage.db"
+	filepath = GetHomeDir() + "/.local/share/productivity.db" 
 )
 
 type DB struct {
@@ -17,7 +24,13 @@ type DB struct {
 func (d *DB) Connection () {
 	db, err := sql.Open("duckdb", filepath)
 	if err != nil {
-		log.Panic("COULD NOT CONNECT TO DATABASE: ", err)
+		checkErrorString := err.Error()
+		if strings.Contains(checkErrorString, "set lock on file") {
+			log.Println("FILE LOCKED: ANOTHER INSTANCE IS RUNNING")
+			os.Exit(1)
+		} else {
+			log.Panic(err)
+		}
 	}
 	d.conn = db
 	d.CreateTables() 
@@ -29,4 +42,12 @@ func (d *DB) CreateTables () {
 	if err != nil {
 		log.Panic("ADDING TABLE FAILURE: ", err)
 	}
+}
+
+func GetHomeDir() string {
+	homeDir, err := os.UserHomeDir()
+	if err != nil {
+		log.Fatal(err)
+	}
+	return homeDir
 }
