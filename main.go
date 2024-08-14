@@ -3,10 +3,12 @@ package main
 import (
 	"fmt"
 	// "github.com/IshmamF/productivity-monitor/window" Uncomment when using module
-	"time"
 	"github.com/IshmamF/productivity-monitor/darwin"
 	"github.com/IshmamF/productivity-monitor/utils"
 	"github.com/IshmamF/productivity-monitor/database"
+	_"os"
+	_"bufio"
+	_"strings"
 )
 
 // TO DO NEXT: 
@@ -19,6 +21,7 @@ import (
 	/*
 	look into channels
 	go routine , if forever loop , main routine waits for program to exit
+	in each infinite loop, have switch cases for the programs to communicate with each other
 	*/
 // [x] Stop multiple instances from being ran 
 	/*
@@ -32,39 +35,41 @@ import (
 // - Option to be a login program, starts running automatically when you login to computer
 
 var (
-	activity database.Activity
-	currWindow string
-	counter = 0
-	alert_interval int
-	db = &database.DB{}
 	system_type = utils.Get_OS()
+	db = &database.DB{}
+	user_selection int
 )
 
 func main() {
 	db.Connection()
 
-	alert_interval = utils.GetUserInterval()
-	startTime := utils.GetCurrentTimestamp()
-	
-  	for {
-		activity.Start_Time = startTime
-		activity.Log_Time = utils.GetCurrentTimestamp()
-
-		if system_type == "darwin" {
-			currWindow = darwin.GetForegroundWindowData()
-			activity.Url, activity.App_Name, activity.Title, activity.App_Or_Site = utils.ProcessActivityDetails(currWindow)
-			fmt.Println("Start: " + utils.IntToString(startTime) + ` Log: ` + utils.IntToString(activity.Log_Time) + ` Window: `, activity.Url, activity.App_Name, activity.Title, activity.App_Or_Site)
-		} else {
-			// currWindow = window.GetForegroundWindowData() Uncomment when building for use
-		}
-		db.AddActivity(activity)
-		if counter > 0 && counter % alert_interval == 0 {
-			result := db.HighestUsedApp(activity.Log_Time - int64(alert_interval), activity.Log_Time)
-			utils.AlertMostUsedApp(result)
-		}
-		time.Sleep(1 * time.Second)
-		counter += 1
+	choice := make(chan string)
+	if system_type == "darwin" {
+		go darwin.Start_Tracking(choice, db)
+	} else {
+		// currWindow = window.GetFo
 	}
+	//reader := bufio.NewReader(os.Stdin)
+	for {
+		fmt.Println("Press 1 to Start Tracking")
+		fmt.Scan(&user_selection)
+		//user_selection, _ := reader.ReadString('\n')
+		//user_selection = strings.TrimSpace(user_selection)
+		switch user_selection {
+		case 1:
+			choice <- "start"
+		case 2:
+			choice <- "stop"
+		}
+	}
+
+	/*
+	for {
+		select {
+		case input := <- choice:
+			fmt.Println(input)
+		}
+	}*/
 
 	//results := db.CountAppUsageWithRange(1723256375, 1723400234)
 
