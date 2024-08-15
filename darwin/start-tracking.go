@@ -10,8 +10,6 @@ var (
 	activity database.Activity
 	currWindow string
 	counter = 0
-	alert_interval = 5
-	alert_on = true
 )
 
 func Start_Tracking(choice chan string, db *database.DB) {
@@ -33,6 +31,7 @@ func Start_Tracking(choice chan string, db *database.DB) {
 				}
 			default:
 				if running {
+					alert_interval := db.GetAlertSettings()
 					activity.Start_Time = startTime
 					activity.Log_Time = utils.GetCurrentTimestamp()
 					currWindow = GetForegroundWindowData()
@@ -41,8 +40,8 @@ func Start_Tracking(choice chan string, db *database.DB) {
 					//fmt.Println("Start: " + utils.IntToString(startTime) + ` Log: ` + utils.IntToString(activity.Log_Time) + ` Window: `, activity.Url, activity.App_Name, activity.Title, activity.App_Or_Site)
 					
 					db.AddActivity(activity)
-					if alert_on && counter > 0 && counter % alert_interval == 0 {
-						result := db.HighestUsedApp(activity.Log_Time - int64(alert_interval), activity.Log_Time)
+					if alert_interval.Alert_On && counter > 0 && counter % alert_interval.Interval == 0 {
+						result := db.HighestUsedApp(activity.Log_Time - int64(alert_interval.Interval), activity.Log_Time)
 						AlertMostUsedApp(result)
 					}
 					counter += 1
