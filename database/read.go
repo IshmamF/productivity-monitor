@@ -15,7 +15,7 @@ func (d *DB) CountAppUsageWithRange (startTime int64, endTime int64) []App_Count
 // Executes the query to get the count of number of app/site within time period
 func (d *DB) QueryAppUsageCount (startTime int64, endTime int64) *sql.Rows {
 	db := d.conn
-	rows, err := db.Query(`SELECT App_Name, COUNT(App_Name) FROM Activity WHERE Log_Time BETWEEN ? AND ? group by App_Name`, startTime, endTime)
+	rows, err := db.Query(`SELECT App_Or_Site, COUNT(App_Or_Site) FROM Activity WHERE Log_Time BETWEEN ? AND ? group by App_Or_Site ORDER BY COUNT(App_Or_Site) DESC LIMIT 10`, startTime, endTime)
 	if err != nil {
 		panic("Query Failed")
 	}
