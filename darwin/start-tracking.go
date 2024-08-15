@@ -1,7 +1,6 @@
 package darwin
 
 import (
-	"fmt"
 	"time"
 	"github.com/IshmamF/productivity-monitor/utils"
 	"github.com/IshmamF/productivity-monitor/database"
@@ -34,13 +33,6 @@ func Start_Tracking(choice chan string, db *database.DB) {
 				}
 			default:
 				if running {
-					if alert_interval == -1 {
-						fmt.Println("Select 0 if you don't want alerts")
-						alert_interval = utils.GetUserInterval()
-						if alert_interval > 0 {
-							alert_on = true
-						}
-					}
 					activity.Start_Time = startTime
 					activity.Log_Time = utils.GetCurrentTimestamp()
 					currWindow = GetForegroundWindowData()
@@ -51,7 +43,7 @@ func Start_Tracking(choice chan string, db *database.DB) {
 					db.AddActivity(activity)
 					if alert_on && counter > 0 && counter % alert_interval == 0 {
 						result := db.HighestUsedApp(activity.Log_Time - int64(alert_interval), activity.Log_Time)
-						utils.AlertMostUsedApp(result)
+						AlertMostUsedApp(result)
 					}
 					counter += 1
 					time.Sleep(1 * time.Second)
