@@ -18,3 +18,23 @@ func (d *DB) AddActivity (activity Activity) {
 		log.Panic("INSERT ACTIVITY FAILURE: ", err)
 	}
 }
+
+func (d *DB) UpdateAlertOn(turn_on bool) {
+	db := d.conn
+	var query string
+	if turn_on {
+		query = `
+		UPDATE Alert_Settings
+		SET Alert_On = TRUE
+		WHERE Alert_ID = 0`
+	} else {
+		query = `
+		UPDATE Alert_Settings
+		SET Alert_On = FALSE
+		WHERE Alert_ID = 0`
+	}
+	_, err := db.Exec(query)
+	if err != nil {
+		log.Panic(err)
+	}
+}

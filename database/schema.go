@@ -16,3 +16,9 @@ type App_Count struct {
 	App_Name string
 	Count int
 }
+
+type Alert_Settings struct {
+	Alert_ID int
+	Alert_On bool
+	Interval int
+}

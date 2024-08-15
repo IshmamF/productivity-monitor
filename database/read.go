@@ -78,3 +78,11 @@ func ScanAllRows (rows *sql.Rows) []Activity {
 	}
 	return results
 }
+
+func (d *DB) GetAlertSettings() (alert_settings Alert_Settings) {
+	db := d.conn
+	row := db.QueryRow("SELECT Alert_On, Interval FROM Alert_Settings")
+	_ = row.Scan(&alert_settings.Alert_On, &alert_settings.Interval)
+	return
+
+}

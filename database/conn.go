@@ -33,14 +33,33 @@ func (d *DB) Connection () {
 		}
 	}
 	d.conn = db
-	d.CreateTables() 
+	d.CreateTables()
 }
 
 func (d *DB) CreateTables () {
 	db := d.conn
 	_, err := db.Exec(`CREATE TABLE IF NOT EXISTS Activity (Start_Time INTEGER, Log_Time INTEGER, App_Or_Site string, App_Name VARCHAR, Url string, Title string)`)
 	if err != nil {
-		log.Panic("ADDING TABLE FAILURE: ", err)
+		log.Panic("ADDING Activity TABLE FAILURE: ", err)
+	}
+	_, err = db.Exec(`CREATE TABLE IF NOT EXISTS Alert_Settings (Alert_ID INTEGER, Alert_On BOOLEAN, Interval INTEGER)`)
+	if err != nil {
+		log.Panic("ADDING Alert_Settings TABLE FAILURE: ", err)
+	}
+	d.InitAlert()
+	
+}
+
+func (d *DB) InitAlert() {
+	db := d.conn 
+	var count int
+	row := db.QueryRow("SELECT COUNT(*) FROM Alert_Settings")
+	_ = row.Scan(&count)
+	if count == 0 {
+		_, err := db.Exec(`INSERT INTO Alert_Settings VALUES (?, ?, ?)`, 0, false, 300)
+		if err != nil {
+			log.Panic("INSERT ALERT SETTINGS FAILURE : ", err)
+		}
 	}
 }
 
