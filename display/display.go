@@ -1,6 +1,8 @@
 package display
 
 import (
+	"strconv"
+	"strings"
 	"github.com/IshmamF/productivity-monitor/database"
 	"github.com/pterm/pterm"
 )
@@ -67,10 +69,30 @@ func (t *Display) AlertSettingsDisplay(db *database.DB) (selectedOption string) 
 	return 
 }
 
-func (t *Display) IntervalDisplay(db *database.DB) (selectedOption string){
-	alert_settings := db.GetAlertSettings() 
-	pterm.Info.Println("Current Monitor Interval: ", alert_settings.Interval)
-	pterm.DefaultInteractiveTextInput.Show()
-	selectedOption = "Done"
-	return
+func (t *Display) IntervalDisplay(db *database.DB, selectedOption string) (string) {
+	alert_settings := db.GetAlertSettings()
+	if selectedOption == "Interval Error(1)" {
+		pterm.Warning.Println("Invalid Interval: Not an Integer")
+	} else if selectedOption == "Interval Error(2)" {
+		pterm.Warning.Println("Invalid Interval: Interval Less Than 60 seconds")
+	}
+	if alert_settings.Interval == 300 {
+		pterm.Info.Println("Current Monitor Interval: ", alert_settings.Interval, " (Default)")
+	} else {
+		pterm.Info.Println("Current Monitor Interval: ", alert_settings.Interval)
+	}
+	pterm.Info.Println("Enter -1 to Return to Main Menu")
+	resultStr, _ := pterm.DefaultInteractiveTextInput.Show()
+	resultInt, err := strconv.Atoi(resultStr)
+	if err != nil {
+		checkErrorString := err.Error()
+		if strings.Contains(checkErrorString, "invalid syntax") {
+			return "Interval Error(1)"
+		} 
+    }
+	if resultInt != -1 && resultInt < 60 {
+		return "Interval Error(2)"
+	}
+	db.UpdateAlertInterval(resultInt)
+	return "Menu"
 }

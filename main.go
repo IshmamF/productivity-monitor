@@ -51,14 +51,13 @@ func main() {
 	for {
 		screen.Clear()
 		screen.MoveTopLeft()
-		pterm.DefaultBasicText.WithStyle(pterm.NewStyle(pterm.BgCyan)).Println("Hello There")
-
+		pterm.DefaultHeader.WithFullWidth().WithBackgroundStyle(pterm.NewStyle(pterm.BgBlack)).WithTextStyle(pterm.NewStyle(pterm.FgLightCyan)).Println("Productivity Monitor")
 		if strings.Contains(strings.ToLower(selectedOption),"track") {
 			selectedOption = t.TrackingDisplay(choice)
 		} else if strings.Contains(strings.ToLower(selectedOption),"alert")  {
 			selectedOption = t.AlertSettingsDisplay(db)
 		} else if strings.Contains(strings.ToLower(selectedOption), "interval") {
-			selectedOption = t.IntervalDisplay(db)
+			selectedOption = t.IntervalDisplay(db, selectedOption)
 		} else {
 			selectedOption = t.MenuDisplay()
 		}
