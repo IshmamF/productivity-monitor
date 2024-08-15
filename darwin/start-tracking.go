@@ -12,27 +12,25 @@ var (
 	counter = 0
 )
 
-func Start_Tracking(choice chan string, db *database.DB) {
-	running := false
+func Start_Tracking(choice chan string, db *database.DB, startTime *int64, running *bool) {
 	
-	var startTime int64
 	for {
 		select {
 			case track := <- choice:
 				if track == "start" {
-					if !running {
-						running = true
-						startTime = utils.GetCurrentTimestamp()
+					if !*running {
+						*running = true
+						*startTime = utils.GetCurrentTimestamp()
 					}
 				} else if track == "stop" {
-					if running {
-						running = false
+					if *running {
+						*running = false
 					}
 				}
 			default:
-				if running {
+				if *running {
 					alert_interval := db.GetAlertSettings()
-					activity.Start_Time = startTime
+					activity.Start_Time = *startTime
 					activity.Log_Time = utils.GetCurrentTimestamp()
 					currWindow = GetForegroundWindowData()
 		

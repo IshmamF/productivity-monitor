@@ -9,6 +9,7 @@ import (
     "github.com/inancgumus/screen"
 	"github.com/pterm/pterm"
 	"strings"
+	"os"
 )
 
 // TO DO NEXT: 
@@ -38,6 +39,8 @@ var (
 	db = &database.DB{}
 	t = &display.Display{}
 	selectedOption string
+	startTime int64
+	running = false
 )
 
 func main() {
@@ -46,18 +49,26 @@ func main() {
 	t.Init()
 
 	choice := make(chan string)
-	go darwin.Start_Tracking(choice, db)
+	go darwin.Start_Tracking(choice, db, &startTime, &running)
 
 	for {
 		screen.Clear()
 		screen.MoveTopLeft()
 		pterm.DefaultHeader.WithFullWidth().WithBackgroundStyle(pterm.NewStyle(pterm.BgBlack)).WithTextStyle(pterm.NewStyle(pterm.FgLightCyan)).Println("Productivity Monitor")
 		if strings.Contains(strings.ToLower(selectedOption),"track") {
-			selectedOption = t.TrackingDisplay(choice)
+			selectedOption = t.TrackingDisplay(choice, &running)
 		} else if strings.Contains(strings.ToLower(selectedOption),"alert")  {
 			selectedOption = t.AlertSettingsDisplay(db)
 		} else if strings.Contains(strings.ToLower(selectedOption), "interval") {
 			selectedOption = t.IntervalDisplay(db, selectedOption)
+		} else if selectedOption == "View Current Session Data" {
+			selectedOption = t.SessionDisplay(db, &startTime)
+		} else if selectedOption == "Quit Program" {
+			os.Exit(1)
+		} else if strings.Contains(strings.ToLower(selectedOption),"statistics") {
+			selectedOption = t.StatisticsDisplay(db)
+		} else if selectedOption == "Daily" {
+			selectedOption = t.DailyDisplay(db)
 		} else {
 			selectedOption = t.MenuDisplay()
 		}
