@@ -35,6 +35,19 @@ func (d *DB) UpdateAlertOn(turn_on bool) {
 	}
 	_, err := db.Exec(query)
 	if err != nil {
-		log.Panic(err)
+		log.Panic("Update Alert On Failure", err)
+	}
+}
+
+func (d *DB) UpdateAlertInterval(interval int) {
+	query := `
+	UPDATE Alert_Settings
+	SET Interval = ?
+	WHERE Alert_ID = 0`
+	db := d.conn
+
+	_, err := db.Exec(query, interval)
+	if err != nil {
+		log.Panic("Update Interval Failure", err)
 	}
 }
