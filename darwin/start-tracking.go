@@ -17,23 +17,19 @@ var (
 
 func Start_Tracking(choice chan string, db *database.DB) {
 	running := false
-	startTime := utils.GetCurrentTimestamp()
+	
+	var startTime int64
 	for {
 		select {
 			case track := <- choice:
 				if track == "start" {
 					if !running {
 						running = true
-						fmt.Println("Tracking started.")
-					} else {
-						fmt.Println("Tracking already started.")
+						startTime = utils.GetCurrentTimestamp()
 					}
 				} else if track == "stop" {
 					if running {
 						running = false
-						fmt.Println("Tracking stopped.")
-					} else {
-						fmt.Println("Tracking not started.")
 					}
 				}
 			default:
@@ -54,7 +50,6 @@ func Start_Tracking(choice chan string, db *database.DB) {
 					
 					db.AddActivity(activity)
 					if alert_on && counter > 0 && counter % alert_interval == 0 {
-						fmt.Println(counter, alert_interval)
 						result := db.HighestUsedApp(activity.Log_Time - int64(alert_interval), activity.Log_Time)
 						utils.AlertMostUsedApp(result)
 					}
