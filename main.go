@@ -5,9 +5,10 @@ import (
 	"github.com/IshmamF/productivity-monitor/darwin"
 	_"github.com/IshmamF/productivity-monitor/utils"
 	"github.com/IshmamF/productivity-monitor/database"
-	"github.com/IshmamF/productivity-monitor/tui"
+	"github.com/IshmamF/productivity-monitor/display"
     "github.com/inancgumus/screen"
 	"github.com/pterm/pterm"
+	"strings"
 )
 
 // TO DO NEXT: 
@@ -35,12 +36,13 @@ import (
 
 var (
 	db = &database.DB{}
-	t = &tui.TUI{}
+	t = &display.Display{}
 	selectedOption string
 )
 
 func main() {
 	db.Connection()
+
 	t.Init()
 
 	choice := make(chan string)
@@ -51,8 +53,12 @@ func main() {
 		screen.MoveTopLeft()
 		pterm.DefaultBasicText.WithStyle(pterm.NewStyle(pterm.BgCyan)).Println("Hello There")
 
-		if selectedOption == "Track Activity" || selectedOption == "Start Tracking" || selectedOption == "Stop Tracking" {
+		if strings.Contains(strings.ToLower(selectedOption),"track") {
 			selectedOption = t.TrackingDisplay(choice)
+		} else if strings.Contains(strings.ToLower(selectedOption),"alert")  {
+			selectedOption = t.AlertSettingsDisplay(db)
+		} else if strings.Contains(strings.ToLower(selectedOption), "interval") {
+			selectedOption = t.IntervalDisplay(db)
 		} else {
 			selectedOption = t.MenuDisplay()
 		}
