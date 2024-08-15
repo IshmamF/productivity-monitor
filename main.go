@@ -1,14 +1,13 @@
 package main
 
 import (
-	"fmt"
-	// "github.com/IshmamF/productivity-monitor/window" Uncomment when using module
+	_"fmt"
 	"github.com/IshmamF/productivity-monitor/darwin"
-	"github.com/IshmamF/productivity-monitor/utils"
+	_"github.com/IshmamF/productivity-monitor/utils"
 	"github.com/IshmamF/productivity-monitor/database"
-	_"os"
-	_"bufio"
-	_"strings"
+	"github.com/IshmamF/productivity-monitor/tui"
+    "github.com/inancgumus/screen"
+	"github.com/pterm/pterm"
 )
 
 // TO DO NEXT: 
@@ -16,7 +15,7 @@ import (
 // [x] Look up how to check if table and file exists or not (to handle new and previous users) 
 // [x] Create function to process string recieved from GetForegroundWindowData()
 // [x] Get user input on when to send alert, might need to use a counter to keep track of time passed  
-// - Need to look into how to execute other functions like viewing statistics or running the alert
+// [x] Need to look into how to execute other functions like viewing statistics or running the alert
 // while the logging occurs 
 	/*
 	look into channels
@@ -35,41 +34,30 @@ import (
 // - Option to be a login program, starts running automatically when you login to computer
 
 var (
-	system_type = utils.Get_OS()
 	db = &database.DB{}
-	user_selection int
+	t = &tui.TUI{}
+	selectedOption string
 )
 
 func main() {
 	db.Connection()
+	t.Init()
 
 	choice := make(chan string)
-	if system_type == "darwin" {
-		go darwin.Start_Tracking(choice, db)
-	} else {
-		// currWindow = window.GetFo
-	}
-	//reader := bufio.NewReader(os.Stdin)
+	go darwin.Start_Tracking(choice, db)
+
 	for {
-		fmt.Println("Press 1 to Start Tracking")
-		fmt.Scan(&user_selection)
-		//user_selection, _ := reader.ReadString('\n')
-		//user_selection = strings.TrimSpace(user_selection)
-		switch user_selection {
-		case 1:
-			choice <- "start"
-		case 2:
-			choice <- "stop"
+		screen.Clear()
+		screen.MoveTopLeft()
+		pterm.DefaultBasicText.WithStyle(pterm.NewStyle(pterm.BgCyan)).Println("Hello There")
+
+		if selectedOption == "Track Activity" || selectedOption == "Start Tracking" || selectedOption == "Stop Tracking" {
+			selectedOption = t.TrackingDisplay(choice)
+		} else {
+			selectedOption = t.MenuDisplay()
 		}
 	}
 
-	/*
-	for {
-		select {
-		case input := <- choice:
-			fmt.Println(input)
-		}
-	}*/
 
 	//results := db.CountAppUsageWithRange(1723256375, 1723400234)
 
