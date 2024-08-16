@@ -107,6 +107,7 @@ func (t *Display) IntervalDisplay(db *database.DB, selectedOption string) (strin
 			return "Interval Error(1)"
 		} 
     }
+	
 	if resultInt != -1 && resultInt < 60 {
 		return "Interval Error(2)"
 	}

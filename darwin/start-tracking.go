@@ -12,7 +12,7 @@ var (
 	counter = 0
 )
 
-func Start_Tracking(choice chan string, db *database.DB, startTime *int64, running *bool) {
+func Start_Tracking(choice chan string, db *database.DB, startTime *int64, running *bool, ticker *time.Ticker) {
 	
 	for {
 		select {
@@ -24,6 +24,7 @@ func Start_Tracking(choice chan string, db *database.DB, startTime *int64, runni
 					}
 				} else if track == "stop" {
 					if *running {
+						counter = 0
 						*running = false
 					}
 				}
@@ -39,11 +40,12 @@ func Start_Tracking(choice chan string, db *database.DB, startTime *int64, runni
 					
 					db.AddActivity(activity)
 					if alert_interval.Alert_On && counter > 0 && counter % alert_interval.Interval == 0 {
-						result := db.HighestUsedApp(activity.Log_Time - int64(alert_interval.Interval), activity.Log_Time)
+						currentTime := utils.GetCurrentTimestamp()
+						result := db.HighestUsedApp(activity.Log_Time - int64(alert_interval.Interval), currentTime)
 						AlertMostUsedApp(result)
 					}
 					counter += 1
-					time.Sleep(1 * time.Second)
+					<-ticker.C
 				}
 		}
 	}

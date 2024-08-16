@@ -10,6 +10,7 @@ import (
 	"github.com/pterm/pterm"
 	"strings"
 	"os"
+	"time"
 )
 
 // TO DO NEXT: 
@@ -45,11 +46,12 @@ var (
 
 func main() {
 	db.Connection()
+	ticker := time.NewTicker(time.Second)
 
 	t.Init()
 
 	choice := make(chan string)
-	go darwin.Start_Tracking(choice, db, &startTime, &running)
+	go darwin.Start_Tracking(choice, db, &startTime, &running, ticker)
 
 	for {
 		screen.Clear()

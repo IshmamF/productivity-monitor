@@ -2,13 +2,9 @@ package database
 
 import (
 	"database/sql"
-	//"fmt"
 	"log"
 
 	_ "github.com/marcboeker/go-duckdb"
-
-	//	"io"
-	//	"errors"
 	"os"
 	"strings"
 )

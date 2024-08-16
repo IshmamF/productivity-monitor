@@ -4,7 +4,6 @@ import (
 	"github.com/andybrewer/mack"
 	"github.com/IshmamF/productivity-monitor/database"
 	"github.com/IshmamF/productivity-monitor/utils"
-	_"fmt"
 )
 
 func AlertMostUsedApp(result database.App_Count) {

@@ -1,8 +1,10 @@
 package darwin
 
 import (
+	_"fmt"
 	"os/exec"
 	"strings"
+	_"time"
 )
 
 func GetForegroundWindowData() string {
@@ -40,11 +42,14 @@ func GetForegroundWindowData() string {
 	
 	return {currentTabUrl, currentTabTitle, appTitle, windowTitle}
 	`
+	//start := time.Now() 
 	cmd := exec.Command("osascript", "-e", apple_script)
 	output, err := cmd.CombinedOutput()
 	if err != nil {
 		return "No window detected"
 	}
 	prettyOutput := strings.Replace(string(output), "\n", "", -1)
+	//elapsed := time.Since(start)
+	//fmt.Println(elapsed)
 	return prettyOutput
 }
