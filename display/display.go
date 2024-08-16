@@ -20,25 +20,41 @@ type Display struct {
 }
 
 func (t *Display) Init() {
+	t.InitMenu()
+
+	t.InitTracking()
+
+	t.InitAlert()
+
+	t.InitStatistics()
+}
+
+func (t *Display) InitMenu() {
 	t.menu_options = append(t.menu_options, "Track Activity")
 	t.menu_options = append(t.menu_options, "Statistics")
 	t.menu_options = append(t.menu_options, "Alert Settings")
 	t.menu_options = append(t.menu_options, "Quit Program")
+}
 
+func (t *Display) InitTracking() {
 	t.tracking_options_off = append(t.tracking_options_off, "Start Tracking")
 	t.tracking_options_off = append(t.tracking_options_off, "Menu")
 
 	t.tracking_options_on = append(t.tracking_options_on, "Stop Tracking")
 	t.tracking_options_on = append(t.tracking_options_on, "View Current Session Data")
 	t.tracking_options_on = append(t.tracking_options_on, "Menu")
+}
 
+func (t *Display) InitAlert() {
 	t.alert_off_options = append(t.alert_off_options, "Turn Alerts On")
 	t.alert_off_options = append(t.alert_off_options, "Menu")
 
 	t.alert_on_options = append(t.alert_on_options, "Turn Alerts Off")
 	t.alert_on_options = append(t.alert_on_options, "Set Interval")
 	t.alert_on_options = append(t.alert_on_options, "Menu")
+}
 
+func (t *Display) InitStatistics() {
 	t.statistic_options = append(t.statistic_options, "Daily")
 	t.statistic_options = append(t.statistic_options, "Weekly")
 	t.statistic_options = append(t.statistic_options, "All Time")
@@ -129,13 +145,7 @@ func (t *Display) SessionDisplay(db *database.DB, startTime *int64) (selectedOpt
 	}
 	pterm.DefaultTable.WithHasHeader().WithBoxed().WithData(tablerow).Render()
 	var input string
-	pterm.Info.WithMessageStyle(pterm.NewStyle(pterm.FgLightMagenta)).Println("Enter 'p' to Return to Previous Page")
-	pterm.Info.WithMessageStyle(pterm.NewStyle(pterm.FgLightMagenta)).Println("Enter 'm' to Return to go to Menu Page")
-	pterm.Info.WithMessageStyle(pterm.NewStyle(pterm.FgLightMagenta)).Println("Enter any character to Refresh")
-	textprinter := pterm.BasicTextPrinter{
-		Style: pterm.NewStyle(pterm.FgLightGreen),
-	}
-	textprinter.Print("Input character: ")
+	ShowOptions()
 	fmt.Scan(&input)
 	switch input {
 	case "p":
@@ -167,13 +177,7 @@ func (t *Display) DailyDisplay(db *database.DB) (selectedOption string) {
 	pterm.DefaultBasicText.Println("Most Used Apps within 24 Hours in Minutes")
 	pterm.DefaultBarChart.WithBars(bar).WithHorizontal().WithShowValue().WithWidth(40).Render()
 	var input string
-	pterm.Info.WithMessageStyle(pterm.NewStyle(pterm.FgLightMagenta)).Println("Enter 'p' to Return to Previous Page")
-	pterm.Info.WithMessageStyle(pterm.NewStyle(pterm.FgLightMagenta)).Println("Enter 'm' to Return to go to Menu Page")
-	pterm.Info.WithMessageStyle(pterm.NewStyle(pterm.FgLightMagenta)).Println("Enter any character to Refresh")
-	textprinter := pterm.BasicTextPrinter{
-		Style: pterm.NewStyle(pterm.FgLightGreen),
-	}
-	textprinter.Print("Input character: ")
+	ShowOptions()
 	fmt.Scan(&input)
 	switch input {
 	case "p":
@@ -209,4 +213,14 @@ func ChooseStyle(i int) (style *pterm.Style) {
 		style = pterm.NewStyle(pterm.FgGray)
 	}
 	return
+}
+
+func ShowOptions() {
+	pterm.Info.WithMessageStyle(pterm.NewStyle(pterm.FgLightMagenta)).Println("Enter 'p' to Return to Previous Page")
+	pterm.Info.WithMessageStyle(pterm.NewStyle(pterm.FgLightMagenta)).Println("Enter 'm' to Return to go to Menu Page")
+	pterm.Info.WithMessageStyle(pterm.NewStyle(pterm.FgLightMagenta)).Println("Enter any character to Refresh")
+	textprinter := pterm.BasicTextPrinter{
+		Style: pterm.NewStyle(pterm.FgLightGreen),
+	}
+	textprinter.Print("Input character: ")
 }
