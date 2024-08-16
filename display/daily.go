@@ -15,7 +15,7 @@ func (t *Display) DailyDisplay(db *database.DB) (string) {
 
 	bar := ConvertToBarList(data)
 	
-	ShowDailyBar(bar)
+	ShowBar(bar,"daily")
 	var input string
 	ShowOptions()
 	fmt.Scan(&input)
@@ -44,9 +44,17 @@ func HandleDailyInput(input string) (selectedOption string) {
 	return
 }
 
-func ShowDailyBar(bar []pterm.Bar) {
+func ShowBar(bar []pterm.Bar, bar_period string) {
+	var msg string 
+	if bar_period == "daily" {
+		msg = "within 24 Hours"
+	} else if bar_period == "all time" {
+		msg = "of all time"
+	} else {
+		msg = "within a Week"
+	}
 	pterm.DefaultBasicText.Println("")
-	pterm.DefaultBasicText.Println("Most Used Apps within 24 Hours in Minutes")
+	pterm.DefaultBasicText.Println("Most Used Apps",msg,"in Minutes")
 	pterm.DefaultBarChart.WithBars(bar).WithHorizontal().WithShowValue().WithWidth(40).Render()
 }
 

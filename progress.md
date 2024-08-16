@@ -13,7 +13,7 @@
 	os.Stat to check file exists
 - [x] Create TUI 
 - [x] Option to see current session data 
-- [ ] Convert data to daily/weekly/all time statistics 
+- [x] Convert data to daily/weekly/all time statistics 
 ## Feature Ideas
 - [ ] Option to be a login program, starts running automatically when you login to computer
 - [ ] Send alert when on a blacklisted website/app

@@ -37,6 +37,7 @@ func (t *Display) InitTracking() {
 
 func (t *Display) InitAlert() {
 	t.alert_off_options = append(t.alert_off_options, "Turn Alerts On")
+	t.alert_off_options = append(t.alert_off_options, "Set Interval")
 	t.alert_off_options = append(t.alert_off_options, "Menu")
 
 	t.alert_on_options = append(t.alert_on_options, "Turn Alerts Off")

@@ -49,6 +49,10 @@ func main() {
 			selectedOption = t.StatisticsDisplay(db)
 		} else if selectedOption == "Daily" {
 			selectedOption = t.DailyDisplay(db)
+		} else if selectedOption == "Weekly" {
+			selectedOption = t.WeeklyDisplay(db)
+		} else if selectedOption == "All Time" {
+			selectedOption = t.AllTimeDisplay(db)
 		} else {
 			selectedOption = t.MenuDisplay()
 		}

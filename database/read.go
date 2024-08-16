@@ -84,3 +84,15 @@ func (d *DB) GetAlertSettings() (alert_settings Alert_Settings) {
 	return
 
 }
+
+func (d *DB) AllTimeMostUsedApp() []App_Count {
+	db := d.conn
+	query := `
+	SELECT App_Or_Site, COUNT(App_Or_Site)
+	FROM Activity 
+	GROUP BY App_Or_Site
+	ORDER BY COUNT(App_Or_Site) DESC LIMIT 10;
+	`
+	rows, _ := db.Query(query)
+	return ScanAppCountQuery(rows)
+}
