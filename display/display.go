@@ -42,6 +42,7 @@ func (t *Display) Init() {
 	t.statistic_options = append(t.statistic_options, "Daily")
 	t.statistic_options = append(t.statistic_options, "Weekly")
 	t.statistic_options = append(t.statistic_options, "All Time")
+	t.statistic_options = append(t.statistic_options, "Menu")
 }
 
 func (t *Display) MenuDisplay() (selectedOption string) {
@@ -159,24 +160,7 @@ func (t *Display) DailyDisplay(db *database.DB) (selectedOption string) {
 	bar := []pterm.Bar{}
 	for i, activity := range data {
 		minutes := int(math.Ceil((float64(activity.Count) / float64(60))))
-		var style *pterm.Style
-		if i % 10 == 0 {
-			style = pterm.NewStyle(pterm.FgGreen)
-		} else if i % 2 == 0 {
-			style = pterm.NewStyle(pterm.FgBlue)
-		} else  if i % 3 == 0{
-			style = pterm.NewStyle(pterm.FgLightRed)
-		} else if i % 4 == 0 {
-			style = pterm.NewStyle(pterm.FgCyan)
-		} else if i % 5 == 0 {
-			style = pterm.NewStyle(pterm.FgCyan)
-		} else if i % 6 == 0 {
-			style = pterm.NewStyle(pterm.FgCyan)
-		} else if i % 7 == 0 {
-			style = pterm.NewStyle(pterm.FgCyan)
-		} else if i % 8 == 0 {
-			style = pterm.NewStyle(pterm.FgCyan)
-		}
+		style := ChooseStyle(i)
 		bar = append(bar, pterm.Bar{Label: activity.App_Name, Value: minutes, Style: style})
 	}
 	pterm.DefaultBasicText.Println("")
