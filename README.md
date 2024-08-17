@@ -65,7 +65,9 @@ $ go run .
 ## Download
 
 You can [download](https://github.com/IshmamF/productivity-monitor/raw/main/productivity-monitor.zip) the latest installable version of Productivity Monitor for macOS. <br> 
-Once you've unzipped, if macOS doens't allow you to open due to not being able to scan, you need to right click -> Select Open With -> Click Terminal -> Click Open / Allow on the popup.
+
+**Note**
+> Once you've unzipped, if macOS doens't allow you to run application due to not being able to scan, you need to: <br> right click -> Select Open With -> Click Terminal -> Click Open / Allow on the popup.
 
 ## 📜 License
 
