@@ -69,7 +69,7 @@ You can [download](https://github.com/IshmamF/productivity-monitor/raw/main/prod
 **Note**
 > Once you've unzipped, if macOS doens't allow you to run application due to not being able to scan, you need to: <br> right click -> Select Open With -> Click Terminal -> Click Open / Allow on the popup.
 
-## 📜 License
+## License
 
 This software is licensed under the [MIT](https://github.com/nhn/tui.editor/blob/master/LICENSE) © [NHN Cloud](https://github.com/ishmamf).
 
