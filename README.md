@@ -71,7 +71,7 @@ You can [download](https://github.com/IshmamF/productivity-monitor/raw/main/prod
 
 ## License
 
-This software is licensed under the [MIT](https://github.com/nhn/tui.editor/blob/master/LICENSE) © [NHN Cloud](https://github.com/ishmamf).
+This software is licensed under the [MIT](https://github.com/nhn/tui.editor/blob/master/LICENSE) © [Ishmamf](https://github.com/ishmamf).
 
 ---
 
