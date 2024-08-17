@@ -11,6 +11,7 @@ import (
 
 var (
 	filepath = GetHomeDir() + "/.local/share/productivity.db" 
+	folderPath = GetHomeDir() + "/.local/share/"
 )
 
 type DB struct {
@@ -18,6 +19,7 @@ type DB struct {
 }
 
 func (d *DB) Connection () {
+	os.MkdirAll(folderPath, os.ModePerm)
 	db, err := sql.Open("duckdb", filepath)
 	if err != nil {
 		checkErrorString := err.Error()
