@@ -22,7 +22,7 @@
   <a href="#license">License</a>
 </p>
 
-<img src="https://github.com/IshmamF/productivity-monitor/blob/30d43efde9cca683be14ae4be3c7d78055b34275/readme-media/Screen%20Recording%202024-08-17%20at%203.06.11%20PM.gif" alt="GIF OF APPLICATION" style="height: 300px; width:600px;"/>
+<div align="center"> <img src="https://github.com/IshmamF/productivity-monitor/blob/30d43efde9cca683be14ae4be3c7d78055b34275/readme-media/Screen%20Recording%202024-08-17%20at%203.06.11%20PM.gif" alt="GIF OF APPLICATION" style="height: 300px; width:600px;"/> </div>
 
 ## About The Project
 When trying to focus on a task, we sometimes get distracted and lose sight of why we got on the computer in the first place. All we need is a reminder to make us concious of our usage to get back to work.  
