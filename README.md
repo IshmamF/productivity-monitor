@@ -23,25 +23,19 @@
 
 ![screenshot](https://raw.githubusercontent.com/amitmerchant1990/electron-markdownify/master/app/img/markdownify.gif)
 
-## ⭐ Key Features
+## Key Features
 
-* LivePreview - Make changes, See changes
-  - Instantly see what your Markdown documents look like in HTML as you create them.
-* Sync Scrolling
-  - While you type, LivePreview will automatically scroll to the current location you're editing.
-* GitHub Flavored Markdown  
-* Syntax highlighting
-* [KaTeX](https://khan.github.io/KaTeX/) Support
-* Dark/Light mode
-* Toolbar for basic Markdown formatting
-* Supports multiple cursors
-* Save the Markdown preview as PDF
-* Emoji support in preview :tada:
-* App will keep alive in tray for quick usage
-* Full screen mode
-  - Write distraction free.
-* Cross platform
-  - Windows, macOS and Linux ready.
+| Feature          | Description                                         |
+|------------------|-----------------------------------------------------|
+| :warning: Alerts | PTerm's flexible `Printers` can be used individually or combined to generate beautiful console output. |
+| 🪀 Easy to use    | Simple terminal user interface to make setup easy |
+| 🤹‍♀️ Completely Local and Free | Project is open source and does not require you to provide any personal details nor is it saved in the cloud |
+| 🧪 Well tested    | A high test coverage and <!-- unittestcount2:start -->`28774`<!-- unittestcount2:end --> automated tests ensure PTerm's reliability. |
+| ✨ Consistent Colors | PTerm uses the [ANSI color scheme](https://en.wikipedia.org/wiki/ANSI_escape_code#3/4_bit) for uniformity and supports `TrueColor` for advanced terminals. |
+| 📚 Component system | PTerm's flexible `Printers` can be used individually or combined to generate beautiful console output. |
+| 🛠 Configurable   | PTerm is ready to use without configuration but allows easy customization for unique terminal output. |
+| ✏ Documentation  | Access comprehensive docs on [pkg.go.dev](https://pkg.go.dev/github.com/pterm/pterm#section-documentation) and view practical examples in the [examples section](#-examples). |
+
 
 ## How To Use
 
