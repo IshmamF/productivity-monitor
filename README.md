@@ -26,7 +26,7 @@
 
 ## About The Project
 When trying to focus on a task, we sometimes get distracted and lose sight of why we got on the computer in the first place. All we need is a reminder to make us concious of our usage to get back to work.  
-There are many focus tracking applications, however, they usually cost money or lack the feature to send reminders. Productivity Monitor allows you to track your usage, see your data as bar graphs, set intervals on how often you want to get alerts, and ofcourse getting an alert with your most usaged application or website within an interval.
+There are many focus tracking applications, however, they usually cost money or lack the feature to send reminders. Productivity Monitor allows you to track your usage, see your data as bar graphs, set intervals on how often you want to get alerts, and ofcourse getting an alert with your most used application or website within an interval.
 
 
 ## Key Features
